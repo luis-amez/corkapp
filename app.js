@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 
 
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 
 
 // const index = require('./routes/index');
