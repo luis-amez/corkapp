@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const noteTxtSchema = new Schema ({
     title: String,
     contentNote: String,
-    isPrivate: Boolean,
+    isPrivate: True,
     sharedWith: [],
 }, {
     timestamps: {
@@ -12,5 +12,7 @@ const noteTxtSchema = new Schema ({
       updatedAt: "updated_at"
     }
 });
+
+
 
 module.export = mongoose.model ('noteTxt', noteTxtSchema);

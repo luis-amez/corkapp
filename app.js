@@ -6,11 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const notesTxt = require('./routes/notesTxt');
+
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/notes', notesTxt);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
