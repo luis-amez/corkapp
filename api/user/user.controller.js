@@ -20,9 +20,9 @@ exports.createUser = function (req, res, next) {
   // });
 
   const newUser = new userModel({
-    username: "testUser",
-    password: "testPassword",
-    email: "testMail"
+    username: req.body.user,
+    password: req.body.password,
+    email: req.body.email
   });
 
   newUser.save((err, user) => {
