@@ -13,10 +13,16 @@ exports.getUser = function (req, res, next) {
 
 // Create new user
 exports.createUser = function (req, res, next) {
+  // const newUser = new userModel({
+  //   username: req.body.username,
+  //   password: req.body.password,
+  //   email: req.body.email
+  // });
+
   const newUser = new userModel({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email
+    username: "testUser",
+    password: "testPassword",
+    email: "testMail"
   });
 
   newUser.save((err, user) => {
@@ -24,6 +30,8 @@ exports.createUser = function (req, res, next) {
       console.log(err);
 			return res.send(500);
 		}
+    console.log('User saved successfully');
+    res.json({ success: true });
   });
 };
 

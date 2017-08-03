@@ -5,6 +5,9 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
+
 
 require('dotenv').config();
 
@@ -19,6 +22,8 @@ mongoose.connect(process.env.MONGODB_URI);
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.set('secret', process.env.SECRET);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
