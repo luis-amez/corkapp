@@ -22,6 +22,21 @@ exports.createNote = function(req, res, next) {
 };
 
 
+exports.getNotes = function (req, res, next) {
+
+	noteTxtModel.find({}, function(err, notesTxtList) {
+		if( err) {
+			res.json(err);
+		} else {
+			res.status(200).json(notesTxtList);
+		}
+	});
+};
+
+
+
+
+
 exports.editNote = function(req, res, next) {
 	const noteTxtId = req.params.id;
 	const noteTxtToUpdate = {
