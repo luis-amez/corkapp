@@ -7,7 +7,7 @@ const noteTxtSchema = new Schema ({
     isPrivate:  {
       type: Boolean,
       default: true
-    },
+    }
     //sharedWith: [String],
 }, {
     timestamps: {
