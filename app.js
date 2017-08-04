@@ -4,20 +4,25 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const cors = require('cors');
+// const mongoose = require('mongoose');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 
 
-const dotenv = require('dotenv').config();
+// const dotenv = require('dotenv').config();
 
+// database connection
+require('./config/database');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI);
+app.use(cors());
+
+// mongoose.connect(process.env.MONGODB_URI);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
