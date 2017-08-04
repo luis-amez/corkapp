@@ -18,6 +18,7 @@ const dotenv = require('dotenv').config();
 const app = express();
 
 mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect("mongodb://localhost/corkappDB");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
