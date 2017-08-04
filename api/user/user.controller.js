@@ -23,7 +23,7 @@ exports.getUser = function (req, res, next) {
 
 };
 
-// Create new user
+// Signup
 exports.createUser = function (req, res, next) {
   let username = req.body.username;
   let password = req.body.password;
@@ -61,50 +61,57 @@ exports.createUser = function (req, res, next) {
       }
     });
   });
-
-  // const newUser = new userModel({
-  //   username: req.body.username,
-  //   password: req.body.password,
-  //   email: req.body.email
-  // });
-  //
-  // newUser.save((err, user) => {
-  //   if(err) {
-  //     console.log(err);
-	// 		return res.send(500);
-	// 	}
-  //   console.log('User saved successfully');
-  //   res.json(user);
-  // });
 };
 
-/*
-router.post('/signup', (req, res, next) => {
+// Login
+exports.loginUser = function (req, res, next) {
   let username = req.body.username;
   let password = req.body.password;
 
   if (!username || !password) {
-    res.status(400).json({ message: 'Provide username and password' });
+    res.status(401).json({ message: 'Provide username and password' });
     return;
   }
 
-  User.findOne({ username }, '_id', (err, foundUser) => {
-    if (foundUser) {
-      res.status(400).json({ message: 'The username already exists' });
+  userModel.findOne({'username': username}, (err, user) => {
+    if (!user) {
+      res.status(401).json({ message: 'The username or password is incorrect' });
       return;
     }
 
-    let salt = bcrypt.genSaltSync(bcryptSalt);
-    let hashPass = bcrypt.hashSync(password, salt);
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (!isMatch) {
+        res.status(401).json({ message: 'The username or password is incorrect' });
+      }
+      else {
+        const payload = {id: user._id, user: user.username};
+        const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
-    const theUser = new User({
-      username,
-      password: hashPass
+        res.status(200).json({ token, user });
+      }
     });
+  });
+};
 
-    theUser.save((err, user) => {
-      if (err) {
-        res.status(400).json({ message: err });
+/*
+router.post('/login', (req, res, next) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  if (!username || !password) {
+    res.status(401).json({ message: 'Provide username and password' });
+    return;
+  }
+
+  User.findOne({'username': username}, (err, user) => {
+    if (!user) {
+      res.status(401).json({ message: 'The username or password is incorrect' });
+      return;
+    }
+
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (!isMatch) {
+        res.status(401).json({ message: 'The username or password is incorrect' });
       }
       else {
         const payload = {id: user._id, user: user.username};
