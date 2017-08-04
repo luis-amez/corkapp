@@ -4,6 +4,18 @@ const Schema = mongoose.Schema;
 const noteTxtSchema = new Schema ({
     title: String,
     contentNote: String,
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      // type: String,
+      // require: true
+    },
+    cork: {
+      type: Schema.Types.ObjectId,
+      ref: 'Cork',
+      // type: String,
+      // require: true
+    },
     isPrivate:  {
       type: Boolean,
       default: true
@@ -18,4 +30,4 @@ const noteTxtSchema = new Schema ({
 
 
 
-module.exports = mongoose.model ('noteTxt', noteTxtSchema);
+module.exports = mongoose.model ('NoteTxt', noteTxtSchema);

@@ -7,6 +7,8 @@ exports.createNote = function(req, res, next) {
 	const newNoteTxt = new noteTxtModel({
 		title: req.body.title,
 		contentNote: req.body.contentNote,
+		creator: req.body.creator,
+		cork: req.body.cork,
 		isPrivate: req.body.isPrivate
 		//sharedWith: req.body.sharedWith,
 	});
@@ -22,7 +24,7 @@ exports.createNote = function(req, res, next) {
 };
 
 
-exports.getNotes = function (req, res, next) {
+exports.showNotes = function (req, res, next) {
 
 	noteTxtModel.find({}, function(err, notesTxtList) {
 		if( err) {
@@ -33,16 +35,14 @@ exports.getNotes = function (req, res, next) {
 	});
 };
 
-
-
-
-
 exports.editNote = function(req, res, next) {
 	const noteTxtId = req.params.id;
 	const noteTxtToUpdate = {
 		title: req.body.title,
 		contentNote: req.body.contentNote,
 		isPrivate: req.body.isPrivate,
+		creator: req.body.creator,
+		cork: req.body.cork
 	};
 
 	noteTxtModel.findByIdAndUpdate(noteTxtId, noteTxtToUpdate, {'new':true}, (err, noteTxt) => {
@@ -52,9 +52,6 @@ exports.editNote = function(req, res, next) {
 			res.json({ message: 'updated', note: noteTxt });
 		});
 };
-
-
-
 
 
 exports.removeNote = function (req, res) {
