@@ -14,13 +14,27 @@ exports.getUsers = function (req, res, next) {
       console.log(err);
 			return res.send(500);
 		}
-    res.json(users);
+    let usersInfo = [];
+    users.forEach((user) => {
+      usersInfo.push({
+        userId: user._id,
+        username: user.username
+      });
+    });
+    res.json(usersInfo);
   });
 };
 
 // Get user information
 exports.getUser = function (req, res, next) {
+  let id = req.params.id;
 
+  userModel.findById(req.params.id, function(err, user) {
+    if (err) {
+      res.json({ message: 'Impossible to retrieve the usesr', error: err });
+    }
+    res.json(user);
+  });
 };
 
 // Signup
@@ -93,37 +107,6 @@ exports.loginUser = function (req, res, next) {
   });
 };
 
-/*
-router.post('/login', (req, res, next) => {
-  let username = req.body.username;
-  let password = req.body.password;
-
-  if (!username || !password) {
-    res.status(401).json({ message: 'Provide username and password' });
-    return;
-  }
-
-  User.findOne({'username': username}, (err, user) => {
-    if (!user) {
-      res.status(401).json({ message: 'The username or password is incorrect' });
-      return;
-    }
-
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (!isMatch) {
-        res.status(401).json({ message: 'The username or password is incorrect' });
-      }
-      else {
-        const payload = {id: user._id, user: user.username};
-        const token = jwt.sign(payload, jwtOptions.secretOrKey);
-
-        res.status(200).json({ token, user });
-      }
-    });
-  });
-});
-*/
-
 // Update user information
 exports.updateUser = function (req, res, next) {
 
@@ -131,5 +114,10 @@ exports.updateUser = function (req, res, next) {
 
 // Remove a user
 exports.removeUser = function (req, res, next) {
-
+  userModel.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      res.json({ message: 'Impossible to remove the user', error: err });
+    }
+    res.json({ message: 'User removed successfully' });
+  });
 };
