@@ -17,6 +17,7 @@ const userSchema = new Schema ({
   corks: [{
     type: Schema.Types.ObjectId,
     ref: 'Cork',
+    default: []
   }]
 }, {
   timestamps: {

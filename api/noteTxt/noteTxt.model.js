@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const noteTxtSchema = new Schema ({
     title: String,
-    contentNote: String,
     creator: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       // type: String,
       // require: true
     },
+    contentNote: String,
     cork: {
       type: Schema.Types.ObjectId,
       ref: 'Cork',

@@ -1,11 +1,13 @@
-mongoose = require('mongoose');
-noteTxtModel = require ('./noteTxt.model');
+const mongoose = require('mongoose');
+const noteTxtModel = require ('./noteTxt.model');
+const corkModel = require('../cork/cork.model');
+
 
 exports.createNote = function(req, res, next) {
 	const newNoteTxt = new noteTxtModel({
+		creator: req.body.creator,
 		title: req.body.title,
 		contentNote: req.body.contentNote,
-		creator: req.body.creator,
 		cork: req.body.cork,
 		isPrivate: req.body.isPrivate
 		//sharedWith: req.body.sharedWith,
@@ -13,10 +15,17 @@ exports.createNote = function(req, res, next) {
 
 	newNoteTxt.save((err, note) => {
 	if(err) {
-		console.log("luis tonti");
 		console.log(err);
 		return res.send(500);
 	}
+
+	corkModel.findByIdAndUpdate(req.body.cork, { $push: { contentCork: note._id }}, (err) => {
+    if(err) {
+  		console.log(err);
+  		return res.send(500);
+  	}
+  });
+
 	res.json({ message: 'note successfully created', note: note });
 });
 };
