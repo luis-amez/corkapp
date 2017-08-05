@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 const noteTxtSchema = new Schema ({
     title: String,
     contentNote: String,
-    isPrivate: True,
-    sharedWith: [],
+    isPrivate:  {
+      type: Boolean,
+      default: true
+    },
+    //sharedWith: [String],
 }, {
     timestamps: {
       createdAt: "created_at",
@@ -15,4 +18,4 @@ const noteTxtSchema = new Schema ({
 
 
 
-module.export = mongoose.model ('noteTxt', noteTxtSchema);
+module.exports = mongoose.model ('noteTxt', noteTxtSchema);
