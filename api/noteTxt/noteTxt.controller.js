@@ -1,8 +1,6 @@
 mongoose = require('mongoose');
 noteTxtModel = require ('./noteTxt.model');
 
-
-
 exports.createNote = function(req, res, next) {
 	const newNoteTxt = new noteTxtModel({
 		title: req.body.title,

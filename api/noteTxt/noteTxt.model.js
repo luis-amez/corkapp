@@ -28,6 +28,4 @@ const noteTxtSchema = new Schema ({
     }
 });
 
-
-
 module.exports = mongoose.model ('NoteTxt', noteTxtSchema);

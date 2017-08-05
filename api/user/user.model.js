@@ -13,7 +13,11 @@ const userSchema = new Schema ({
   email: {
     type: String,
     require: [true, 'The email is required']
-  }
+  },
+  corks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Cork',
+  }]
 }, {
   timestamps: {
     createdAt: "created_at",

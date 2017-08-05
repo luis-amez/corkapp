@@ -1,7 +1,6 @@
 mongoose = require ('mongoose');
 corkModel = require('./cork.model');
 
-
 exports.showCork = function (req, res, next) {
   const corkId = req.params.id;
 
