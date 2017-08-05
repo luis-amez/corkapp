@@ -15,7 +15,6 @@ let strategy = new JwtStrategy(jwtOptions, (payload, done) => {
     } else {
       done(null, false);
     }
-    // user ? done(null, user) : done(null, false);
   });
 });
 
