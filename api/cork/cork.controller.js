@@ -1,4 +1,4 @@
-mongoose = reuire ('mongoose');
+mongoose = require ('mongoose');
 corkModel = require('./cork.model');
 
 
