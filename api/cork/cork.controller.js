@@ -8,22 +8,22 @@ exports.createCork = function(req, res, next) {
   let userId = req.body.creator;
 	const newCork = new corkModel({
 		title: req.body.title,
-		creator: req.body.creator,
+		creator: userId,
 	});
 
 	newCork.save((err, cork) => {
-	if(err) {
-		console.log(err);
-		return res.send(500);
-	}
-  userModel.findByIdAndUpdate(userId, { $push: { corks: cork._id }}, (err) => {
-    if(err) {
+  	if(err) {
   		console.log(err);
   		return res.send(500);
   	}
-  });
-  
-	res.json({ message: 'cork successfully created', cork: cork });
+    userModel.findByIdAndUpdate(userId, { $push: { corks: cork._id }}, (err) => {
+      if(err) {
+    		console.log(err);
+    		return res.send(500);
+    	}
+    });
+
+  	res.json({ message: 'cork successfully created', cork: cork });
   });
 };
 

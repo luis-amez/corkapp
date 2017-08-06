@@ -68,6 +68,8 @@ exports.createUser = function (req, res, next) {
         res.status(400).json({ message: err });
       }
       else {
+        user.createFirstCork();
+
         const payload = {id: user._id, user: user.username};
         const token = jwt.sign(payload, jwtOptions.secretOrKey);
 

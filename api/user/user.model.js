@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const corkModel = require('../cork/cork.model');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({
@@ -25,5 +26,24 @@ const userSchema = new Schema ({
     updatedAt: "updated_at"
   }
 });
+
+userSchema.methods.createFirstCork = function() {
+  that = this;
+  let userId = that._id;
+
+	const newCork = new corkModel({
+		title: that.username + "'s cork'",
+		creator: userId,
+	});
+
+  newCork.save((err, cork) => {
+  	if(err) {
+  		console.log(err);
+  		return res.send(500);
+  	}
+    that.corks.push(cork);
+    that.save();
+  });
+};
 
 module.exports = mongoose.model('User', userSchema);
