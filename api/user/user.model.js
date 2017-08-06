@@ -43,6 +43,7 @@ userSchema.methods.createFirstCork = function() {
   	}
     that.corks.push(cork);
     that.save();
+    cork.createFirstNote();
   });
 };
 
