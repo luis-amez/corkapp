@@ -28,6 +28,15 @@ exports.createCork = function(req, res, next) {
   });
 };
 
+exports.showCorks = function (req, res, next) {
+	corkModel.find({}, function(err, corks) {
+		if (err) {
+			res.json(err);
+		} else {
+			res.status(200).json(corks);
+		}
+	});
+};
 
 exports.showCork = function (req, res, next) {
   const corkId = req.params.id;
