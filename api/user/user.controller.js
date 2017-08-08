@@ -109,6 +109,11 @@ exports.loginUser = function (req, res, next) {
   });
 };
 
+// Get authentication token
+exports.getToken = function (req, res, next) {
+  res.status(200).json({ token: req.token, user: req.user });
+};
+
 // Update user information
 exports.updateUser = function (req, res, next) {
 
