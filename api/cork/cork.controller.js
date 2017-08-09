@@ -46,12 +46,20 @@ exports.showCorks = function (req, res, next) {
 
 exports.showCork = function (req, res, next) {
   const corkId = req.params.id;
+  const userId = req.user._id;
 
-	corkModel.findById(corkId, function(err, cork) {
-		if (err) {
-			res.json(err);
-		} else {
-			res.status(200).json(cork);
+	corkModel.find({_id: corkId, owner: userId}).populate("contentCork").exec((err, cork) => {
+    if (err) {
+      res.status(404).json({message: "Board is not found"});
 		}
-	});
+    res.status(200).json(cork);
+  });
+
+	// corkModel.find({_id: corkId, owner: userId}, function(err, cork) {
+	// 	if (err) {
+	// 		res.json(err);
+	// 	} else {
+	// 		res.status(200).json(cork);
+	// 	}
+	// });
 };
