@@ -32,7 +32,7 @@ userSchema.methods.createFirstCork = function() {
   let userId = that._id;
 
 	const newCork = new corkModel({
-		title: that.username + "'s cork'",
+		title: that.username + "'s cork",
 		creator: userId,
 	});
 
