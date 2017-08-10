@@ -16,6 +16,10 @@ const corkSchema = new Schema ({
     ref: 'NoteTxt',
     default: []
   }],
+  isPrivate:  {
+    type: Boolean,
+    default: true
+  }
 
   // sharedWith: [{
   //   type: Schema.Types.ObjectId,
@@ -29,7 +33,7 @@ const corkSchema = new Schema ({
     }
 });
 
-corkSchema.methods.createFirstNote = function() {
+corkSchema.methods.createFirstNote = function(message) {
   that = this;
   let userId = that.creator;
   let corkId = that._id;
@@ -37,7 +41,7 @@ corkSchema.methods.createFirstNote = function() {
   const newNoteTxt = new noteTxtModel({
 		creator: userId,
 		title: "First Note",
-		contentNote: "Write here something you want to remember...",
+		contentNote: message,
 		cork: corkId,
 		isPrivate: true
 		//sharedWith: req.body.sharedWith,

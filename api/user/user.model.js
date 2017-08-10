@@ -27,24 +27,56 @@ const userSchema = new Schema ({
   }
 });
 
-userSchema.methods.createFirstCork = function() {
+userSchema.methods.createInitialCorks = function(privacy, message) {
   that = this;
   let userId = that._id;
+  let username = that.username;
+  let corkTitle = "";
 
-	const newCork = new corkModel({
-		title: that.username + "'s cork",
+  console.log("First that:", that);
+
+  if (privacy) {
+    if (username[username.length - 1] !== 's') {
+      corkTitle = username + "'s cork";
+    } else {
+      corkTitle = username + "' cork";
+    }
+  } else {
+    corkTitle = "Public cork";
+  }
+
+	const privateCork = new corkModel({
+		title: corkTitle,
 		creator: userId,
+    isPrivate: privacy
 	});
 
-  newCork.save((err, cork) => {
+  privateCork.save((err, cork) => {
   	if(err) {
   		console.log(err);
   		return res.send(500);
   	}
-    that.corks.push(cork);
+    console.log("Second that:", that);
+    that.corks.push(cork._id);
     that.save();
-    cork.createFirstNote();
+    cork.createFirstNote(message);
   });
+
+  // const publicCork = new corkModel({
+	// 	title: "Public cork",
+	// 	creator: userId,
+  //   isPrivate: false
+	// });
+  //
+  // publicCork.save((err, cork) => {
+  // 	if(err) {
+  // 		console.log(err);
+  // 		return res.send(500);
+  // 	}
+  //   that.corks.push(cork);
+  //   that.save();
+  //   cork.createFirstNote("Write here something you want to share. Your birthday wantlist would be an amazing idea!");
+  // });
 };
 
 module.exports = mongoose.model('User', userSchema);

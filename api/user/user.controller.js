@@ -68,7 +68,12 @@ exports.createUser = function (req, res, next) {
         res.status(400).json({ message: err });
       }
       else {
-        user.createFirstCork();
+        user.createInitialCorks(true, "Write here something you want to remember...");
+        let pri = false;
+        let mes = "Write here something you want to share. Your birthday wantlist would be an amazing idea!";
+        setTimeout(function() {
+          user.createInitialCorks(pri, mes);
+        }, 1500);
 
         const payload = {id: user._id, user: user.username};
         const token = jwt.sign(payload, jwtOptions.secretOrKey);

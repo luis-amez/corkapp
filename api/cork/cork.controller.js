@@ -20,7 +20,7 @@ exports.createCork = function(req, res, next) {
     		return res.send(500);
     	}
     });
-    cork.createFirstNote();
+    cork.createFirstNote("Write here something you want to remember...");
 
   	res.json({ message: 'cork successfully created', cork: cork });
   });
