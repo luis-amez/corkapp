@@ -63,11 +63,11 @@ exports.editNote = function(req, res, next) {
 
 exports.removeNote = function (req, res) {
 	const noteTxtId = req.params.id;
-  noteTxtModel.findByIdAndRemove(noteTxtId, function(err) {
+  noteTxtModel.findByIdAndRemove(noteTxtId, function(err, note) {
           if (err) {
               res.json({ message: 'impossible to remove the note', error: err });
           }
 
-          res.json({ message: 'note removed successfully' });
+          res.json({ message: 'note removed successfully', note: note });
       });
 };
