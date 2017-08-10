@@ -28,7 +28,6 @@ exports.createCork = function(req, res, next) {
 
 exports.showCorks = function (req, res, next) {
   const userId = req.user._id;
-  console.log(userId);
   userModel.findById(userId).populate('corks').exec((err, user) => {
       if (err) {
         return res.status(500).json({message: err});
@@ -47,7 +46,7 @@ exports.showCorks = function (req, res, next) {
 exports.showCork = function (req, res, next) {
   const corkId = req.params.id;
   const userId = req.user._id;
-	corkModel.find({_id: corkId, creator: userId}).populate("contentCork").exec((err, cork) => {
+	corkModel.findOne({_id: corkId, creator: userId}).populate("contentCork").exec((err, cork) => {
     if (err) {
       res.status(404).json({message: "Board is not found"});
 		}

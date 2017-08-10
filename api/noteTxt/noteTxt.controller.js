@@ -5,10 +5,10 @@ const corkModel = require('../cork/cork.model');
 
 exports.createNote = function(req, res, next) {
 	const newNoteTxt = new noteTxtModel({
-		creator: req.body.creator,
+		creator: req.user,
 		title: req.body.title,
 		contentNote: req.body.contentNote,
-		cork: req.body.cork,
+		cork: mongoose.Types.ObjectId(req.body.cork),
 		isPrivate: req.body.isPrivate
 		//sharedWith: req.body.sharedWith,
 	});
