@@ -133,3 +133,18 @@ exports.removeUser = function (req, res, next) {
     res.json({ message: 'User removed successfully' });
   });
 };
+
+// Get public cork
+exports.getPublicCork = function (req, res, next) {
+  let name = req.body.friend;
+  console.log("Name: ", name);
+
+  userModel.findOne({ username: name } , function(err, user) {
+    if (err) {
+      res.json({ message: 'Impossible to retrieve the usesr', error: err });
+    }
+    console.log("User: ", user);
+    console.log("Cork: ", user.corks[1]);
+    res.json(user.corks[1]);
+  });
+};

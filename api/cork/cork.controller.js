@@ -53,6 +53,8 @@ exports.showCork = function (req, res, next) {
     res.status(200).json(cork);
   });
 
+
+
 	// corkModel.find({_id: corkId, owner: userId}, function(err, cork) {
 	// 	if (err) {
 	// 		res.json(err);
